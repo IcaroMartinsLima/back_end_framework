@@ -4,6 +4,14 @@
 
 ```
 back-end/
+├── index.php                     # Entry point principal com roteador
+│
+├── includes/                     # Componentes e configurações PHP reutilizáveis
+│   ├── config.php                # Configurações globais e funções
+│   ├── router.php                # Sistema de roteamento dinâmico
+│   ├── header.php                # Componente header reutilizável
+│   └── footer.php                # Componente footer reutilizável
+│
 ├── css/                          # Estilos consolidados
 │   ├── styles.css                # Estilos globais
 │   ├── auth.css                  # Estilos para login e registro
@@ -18,25 +26,26 @@ back-end/
 │   ├── account.js                # Lógica de conta do usuário
 │   └── dashboard.js              # Lógica do dashboard
 │
-├── pages/                        # Páginas HTML organizadas por módulo
+├── pages/                        # Páginas PHP organizadas por módulo
 │   ├── auth/
-│   │   ├── login.html
-│   │   └── register.html
+│   │   ├── login.php             # Página de login
+│   │   └── register.php          # Página de cadastro
 │   ├── dashboard/
-│   │   └── index.html            # Página inicial
+│   │   └── index.php             # Página inicial
 │   ├── products/
-│   │   └── products.html
+│   │   └── products.php          # Gerenciar produtos
 │   ├── ratings/
-│   │   └── ratings.html
+│   │   └── ratings.php           # Avaliar produtos
 │   ├── indicators/
-│   │   └── indicators.html
+│   │   └── indicators.php        # Ver indicadores
 │   └── account/
-│       └── account.html
+│       └── account.php           # Gerenciar conta
 │
 ├── images/                       # Imagens do projeto
 │   └── UniversalScore.png
 │
-└── README.md
+├── README.md                     # Este arquivo
+└── PHP_ROUTING.md                # Documentação do sistema de roteamento
 ```
 
 ## 🎯 Arquivos CSS
@@ -167,7 +176,33 @@ back-end/
 }
 ```
 
-## 🔗 Navegação
+## 🔗 Roteamento PHP
+
+O projeto implementa um sistema de roteamento dinâmico em PHP:
+
+### URLs de Acesso
+
+```
+http://localhost/index.php                      # Redireciona para dashboard
+http://localhost/index.php?page=dashboard       # Dashboard
+http://localhost/index.php?page=login           # Login
+http://localhost/index.php?page=register        # Cadastro
+http://localhost/index.php?page=products        # Produtos
+http://localhost/index.php?page=ratings         # Avaliações
+http://localhost/index.php?page=indicators      # Indicadores
+http://localhost/index.php?page=account         # Conta
+```
+
+### Componentes PHP Reutilizáveis
+
+- **includes/config.php** - Configurações globais e funções
+- **includes/router.php** - Sistema de roteamento dinâmico
+- **includes/header.php** - Componente de header reutilizável
+- **includes/footer.php** - Componente de footer reutilizável
+
+Para documentação completa, veja `PHP_ROUTING.md`.
+
+## 🔗 Navegação Antiga (HTML Direto)
 
 - **Login/Register**: `/pages/auth/login.html` e `/pages/auth/register.html`
 - **Dashboard**: `/pages/dashboard/index.html`
@@ -175,6 +210,8 @@ back-end/
 - **Avaliações**: `/pages/ratings/ratings.html`
 - **Indicadores**: `/pages/indicators/indicators.html`
 - **Conta**: `/pages/account/account.html`
+
+**Nota**: Usar as URLs PHP acima é recomendado para aproveitar o sistema de roteamento.
 
 ## ⚙️ Importações
 

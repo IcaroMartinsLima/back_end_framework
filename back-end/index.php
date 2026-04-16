@@ -1,11 +1,25 @@
+<?php
+/**
+ * UniversalScore - Sistema de Avaliações
+ * Entry Point Principal (index.php)
+ */
+
+require_once 'includes/config.php';
+require_once 'includes/router.php';
+
+// Obter página atual
+$page = isset($_GET['page']) ? sanitizeInput($_GET['page']) : 'dashboard';
+$pagePath = getPagePath($page);
+
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/auth.css">
-    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/styles.css">
+    <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/auth.css">
+    <link rel="stylesheet" href="<?php echo CSS_PATH; ?>/pages.css">
     <title>UniversalScore</title>
     <style>
         body {
@@ -127,23 +141,9 @@
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="logged-header" id="authHeader">
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <img src="images/UniversalScore.png" alt="UniversalScore Logo" class="logo" style="height: 40px;">
-            </div>
-            <div class="buttons" id="authButtons">
-                <a href="login.html" class="button">Login</a>
-                <a href="register.html" class="button">Cadastro</a>
-            </div>
-            <div id="userSection" style="display: none; align-items: center; gap: 15px; color: white;">
-                <span class="logged-user-info">Bem-vindo, <span class="logged-user-name" id="userName"></span>!</span>
-                <button class="button" style="background-color: rgb(172, 14, 14);" onclick="logout()">Sair</button>
-            </div>
-        </div>
-    </header>
+    <?php include INCLUDES_PATH . '/header.php'; ?>
 
-    <div class="index-content">
+    <div class="index-content" id="indexContent">
         <div class="welcome-section" id="welcomeSection">
             <h1>UniversalScore</h1>
             <p>A plataforma de avaliações mais confiável</p>
@@ -156,25 +156,25 @@
         </div>
 
         <div class="navigation-section" id="navSection" style="display: none;">
-            <a href="products.html" class="nav-card">
+            <a href="<?php echo getBaseUrl(); ?>/index.php?page=products" class="nav-card">
                 <div class="icon">📦</div>
                 <h3>Produtos</h3>
                 <p>Gerenciar produtos e suas informações</p>
             </a>
 
-            <a href="ratings.html" class="nav-card">
+            <a href="<?php echo getBaseUrl(); ?>/index.php?page=ratings" class="nav-card">
                 <div class="icon">⭐</div>
                 <h3>Avaliações</h3>
                 <p>Avaliar produtos e ver avaliações</p>
             </a>
 
-            <a href="indicators.html" class="nav-card">
+            <a href="<?php echo getBaseUrl(); ?>/index.php?page=indicators" class="nav-card">
                 <div class="icon">📊</div>
                 <h3>Indicadores</h3>
                 <p>Ver estatísticas e indicadores</p>
             </a>
 
-            <a href="account.html" class="nav-card">
+            <a href="<?php echo getBaseUrl(); ?>/index.php?page=account" class="nav-card">
                 <div class="icon">👤</div>
                 <h3>Conta</h3>
                 <p>Gerenciar informações da sua conta</p>
@@ -182,26 +182,40 @@
         </div>
     </div>
 
+    <?php 
+    // Se a página é a dashboard, carrega o conteúdo da página específica
+    if ($page !== 'dashboard' && $page !== 'login' && $page !== 'register') {
+        echo '<div style="display: none;" id="pageContent">';
+        includePageContent($pagePath);
+        echo '</div>';
+    }
+    ?>
+
+    <?php include INCLUDES_PATH . '/footer.php'; ?>
+
+    <script src="<?php echo JS_PATH; ?>/common.js"></script>
+    <script src="<?php echo JS_PATH; ?>/auth.js"></script>
+    <script src="<?php echo JS_PATH; ?>/dashboard.js"></script>
+
     <script>
-        function getReviews() {
-            const raw = localStorage.getItem("reviews");
-            if (!raw) return [];
-            try {
-                const parsed = JSON.parse(raw);
-                return Array.isArray(parsed) ? parsed : [];
-            } catch (err) {
-                return [];
-            }
+        // Obter página via URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = urlParams.get('page');
+
+        // Se houver uma página específica (não dashboard), redireciona dinamicamente
+        if (page && page !== 'dashboard') {
+            navigateToPage(page);
         }
 
-        function getCurrentUser() {
-            const raw = localStorage.getItem("currentUser");
-            return raw ? JSON.parse(raw) : null;
+        function navigateToPage(pageName) {
+            const baseUrl = '<?php echo getBaseUrl(); ?>';
+            window.location.href = baseUrl + '/index.php?page=' + pageName;
         }
 
+        // Função para logout via PHP
         function logout() {
             localStorage.removeItem("currentUser");
-            location.reload();
+            window.location.href = '<?php echo getBaseUrl(); ?>/index.php?page=dashboard';
         }
 
         function checkLogin() {
