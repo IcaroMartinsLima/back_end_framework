@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="homeStyle.css">
+    <link rel="stylesheet" href="styles.css">
     <title>UniversalScore</title>
     <style>
         body {
@@ -180,57 +180,7 @@
         </div>
     </div>
 
-    <script>
-        function getReviews() {
-            const raw = localStorage.getItem("reviews");
-            if (!raw) return [];
-            try {
-                const parsed = JSON.parse(raw);
-                return Array.isArray(parsed) ? parsed : [];
-            } catch (err) {
-                return [];
-            }
-        }
-
-        function getCurrentUser() {
-            const raw = localStorage.getItem("currentUser");
-            return raw ? JSON.parse(raw) : null;
-        }
-
-        function logout() {
-            localStorage.removeItem("currentUser");
-            location.reload();
-        }
-
-        function checkLogin() {
-            const user = getCurrentUser();
-            const authButtons = document.getElementById("authButtons");
-            const userSection = document.getElementById("userSection");
-            const navSection = document.getElementById("navSection");
-            const welcomeSection = document.getElementById("welcomeSection");
-            const loggedWelcome = document.getElementById("loggedWelcome");
-
-            if (user) {
-                authButtons.style.display = "none";
-                userSection.style.display = "flex";
-                navSection.style.display = "grid";
-                welcomeSection.style.display = "none";
-                loggedWelcome.style.display = "block";
-
-                document.getElementById("userName").textContent = user.name;
-                document.getElementById("welcomeName").textContent = user.name;
-            } else {
-                authButtons.style.display = "flex";
-                userSection.style.display = "none";
-                navSection.style.display = "none";
-                welcomeSection.style.display = "block";
-                loggedWelcome.style.display = "none";
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            checkLogin();
-        });
-    </script>
+    <script src="commonScript.js"></script>
+    <script src="homeScript.js"></script>
 </body>
 </html>

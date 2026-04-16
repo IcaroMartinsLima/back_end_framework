@@ -1,3 +1,224 @@
+# UniversalScore - Sistema de Avaliações
+
+Plataforma web para gerenciar e avaliar produtos. Desenvolvida com HTML5, CSS3 e JavaScript vanilla, utilizando localStorage para persistência de dados.
+
+## 📁 Estrutura de Arquivos
+
+```
+back-end/
+├── index.html                # Página inicial / Dashboard
+├── login.html                # Página de login
+├── register.html             # Página de registro
+├── products.html             # Gerenciar produtos
+├── ratings.html              # Avaliar produtos
+├── indicators.html           # Indicadores e estatísticas
+├── account.html              # Gerenciar conta
+│
+├── styles.css                # Estilos globais (consolidado)
+│
+├── commonScript.js           # Funções compartilhadas
+├── loginScript.js            # Lógica de autenticação
+├── homeScript.js             # Lógica do dashboard
+├── productScript.js          # Lógica de gerenciamento de produtos
+├── ratingScript.js           # Lógica de avaliações
+├── indicatorsScript.js       # Lógica de indicadores
+├── accountScript.js          # Lógica de gerenciamento de conta
+│
+├── images/
+│   └── UniversalScore.png    # Logo da aplicação
+│
+└── README.md                 # Este arquivo
+```
+
+## 🎯 Arquivos
+
+### HTML Pages
+- **index.html** - Dashboard principal com navegação
+- **login.html** - Autenticação de usuários
+- **register.html** - Criação de nova conta
+- **products.html** - CRUD de produtos
+- **ratings.html** - Avaliação de produtos
+- **indicators.html** - Dashboard com estatísticas
+- **account.html** - Gerenciamento de perfil e conta
+
+### CSS
+- **styles.css** - Consolidado com todos os estilos (global, auth, e páginas)
+
+### JavaScript
+- **commonScript.js** - Funções reutilizáveis (localStorage, validações)
+- **loginScript.js** - Autenticação (login e registro)
+- **homeScript.js** - Lógica do dashboard
+- **productScript.js** - Gerenciamento de produtos
+- **ratingScript.js** - Sistema de avaliações
+- **indicatorsScript.js** - Cálculo e exibição de indicadores
+- **accountScript.js** - Gerenciamento de conta do usuário
+
+## 🔧 Funcionalidades
+
+### Autenticação
+- ✅ Login com email e senha
+- ✅ Registro de novos usuários
+- ✅ Logout
+- ✅ Sessão persistente com localStorage
+
+### Produtos
+- ✅ Cadastrar novo produto (nome, categoria, preço, descrição)
+- ✅ Listar produtos em grid
+- ✅ Deletar produtos
+- ✅ Categorias: Celular, PC, Impressora
+
+### Avaliações
+- ✅ Avaliar produtos (1-5 estrelas)
+- ✅ Adicionar comentário
+- ✅ Visualizar estatísticas por produto
+- ✅ Histórico de avaliações
+
+### Indicadores
+- ✅ Total de produtos
+- ✅ Total de avaliações
+- ✅ Nota média geral
+- ✅ Preço máximo e mínimo
+- ✅ Produto mais avaliado
+- ✅ Tabela de avaliações recentes
+
+### Conta
+- ✅ Visualizar informações pessoais
+- ✅ Ver estatísticas (produtos e avaliações)
+- ✅ Alterar senha
+- ✅ Deletar conta
+
+## 💾 LocalStorage
+
+### users
+```javascript
+[
+  {
+    id: number,
+    name: string,
+    email: string,
+    password: string,
+    createdAt: string (ISO)
+  }
+]
+```
+
+### products
+```javascript
+[
+  {
+    id: string,
+    userId: number,
+    name: string,
+    category: string,
+    price: number,
+    description: string,
+    createdAt: string (ISO)
+  }
+]
+```
+
+### ratings
+```javascript
+[
+  {
+    id: string,
+    productId: string,
+    userId: number,
+    userName: string,
+    rating: number (1-5),
+    comment: string,
+    createdAt: string (ISO)
+  }
+]
+```
+
+### currentUser
+```javascript
+{
+  id: number,
+  name: string,
+  email: string
+}
+```
+
+## 🚀 Como Usar
+
+1. **Abra index.html** no navegador
+2. **Faça login** ou **crie uma conta**
+   - Email de teste: `meuemail@gmail.com`
+   - Senha: `1234`
+3. **Navegue pelas seções** usando os cartões do dashboard
+4. **Todos os dados são salvos localmente** no seu navegador
+
+## 🔐 Autenticação
+
+- Primeira execução cria usuário de teste automaticamente
+- Senha armazenada em localStorage (apenas para demo)
+- Em produção, usar autenticação de servidor com token JWT
+
+## 🎨 Design
+
+- **Tema**: Dark mode com cores azuis e cinza
+- **Componentes**: Modais, cards, grids responsivos
+- **Animações**: Transições suaves
+- **Logo**: UniversalScore.png
+
+## 🔗 Navegação
+
+| Página | Arquivo | Função |
+|--------|---------|--------|
+| Dashboard | index.html | Menu principal |
+| Login | login.html | Autenticação |
+| Cadastro | register.html | Novo usuário |
+| Produtos | products.html | CRUD produtos |
+| Avaliações | ratings.html | Sistema de ratings |
+| Indicadores | indicators.html | Estatísticas |
+| Conta | account.html | Perfil do usuário |
+
+## 📱 Responsividade
+
+Aplicação otimizada para:
+- ✅ Desktop
+- ✅ Tablets
+- ✅ Mobile
+
+## 🛠️ Tecnologias
+
+- HTML5
+- CSS3 (Flexbox, Grid)
+- JavaScript vanilla (ES6+)
+- localStorage (persistência)
+
+## 📝 Notas
+
+- Validação de entrada em cliente
+- Proteção contra XSS com `escapeHtml()`
+- Formatação de datas em português
+- Todos os dados no localStorage (sem servidor necessário)
+
+## 🔄 Fluxo de Autenticação
+
+1. Usuário acessa index.html
+2. JavaScript verifica localStorage.currentUser
+3. Se não logado, mostra botões de login/registro
+4. Se logado, mostra dashboard com navegação
+5. Ao fazer logout, limpa currentUser e recarrega página
+
+## 📊 Próximos Passos
+
+- [ ] Integração com backend (Node.js/Express)
+- [ ] Banco de dados (MongoDB/PostgreSQL)
+- [ ] Autenticação JWT
+- [ ] Upload de imagens para produtos
+- [ ] Sistema de reviews com imagens
+- [ ] Notificações em tempo real
+- [ ] Dark/Light mode toggle
+
+---
+
+**Versão:** 1.0.0  
+**Última atualização:** Abril 2026  
+**Desenvolvido por:** UniversalScore Team
 "# UniversalScore - Estrutura do Projeto
 
 ## 📁 Organização de Pastas
