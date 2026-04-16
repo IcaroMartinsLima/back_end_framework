@@ -55,13 +55,19 @@
 
         <div class="account-section">
             <h2>Segurança</h2>
-            <button class="btn-primary" onclick="openChangePasswordModal()">Alterar Senha</button>
+            <div class="section-buttons">
+                <button class="btn-primary" onclick="openChangePasswordModal()">Alterar Senha</button>
+            </div>
         </div>
 
-        <div class="account-section" style="border-color: rgb(172, 14, 14);">
-            <h2 style="color: rgb(172, 14, 14);">Zona de Perigo</h2>
-            <p style="color: #aaa;">Esta ação não pode ser desfeita.</p>
-            <button class="btn-danger" onclick="deleteAccount()">Deletar Minha Conta</button>
+        <div class="account-section danger-zone">
+            <h2>⚠️ Zona de Perigo</h2>
+            <div class="danger-zone-warning">
+                <span>Esta ação não pode ser desfeita. Sua conta e todos os dados serão permanentemente deletados.</span>
+            </div>
+            <div class="section-buttons">
+                <button class="btn-danger" onclick="deleteAccount()">Deletar Minha Conta</button>
+            </div>
         </div>
     </div>
 
